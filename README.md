@@ -35,14 +35,14 @@ First, I designed and modeled a differential drive robot from scratch for the Ga
 <br/><br/>
 When I had the robot, it was time to create the environment. I implemented a procedural maze generation system based on a recursive backtracking algorithm to create unique, solvable mazes for each simulation run. I configured the system to generate 9x9 grid mazes where each cell is 2 meters wide, resulting in an 18x18 meter navigable space with 1-meter-high walls. The algorithm guarantees that every empty space in the maze is reachable, ensuring valid paths always exist between any two points. I also spawn colored ground markers - a green cylinder at the start point and a red cylinder at the end point. The robot is automatically placed at the start position when the world loads. Additionally, I export a JSON configuration file for each maze containing critical metadata: the occupancy grid (for path planning algorithms), start and end coordinates in both grid and world frames, and maze parameters like dimensions and the random seed used for generation.
 <br><br>
-In the following week, I focused on developing a ROS2 node that controls the robot to autonomously navigate through a sequence of waypoints in the maze. I implemented a two-state controller with a "ROTATE" state for orienting toward the target and a "MOVE" state for driving forward while maintaining heading. The system uses proportional control for both linear and angular velocities, dynamically adjusting speed based on distance to target and angle error. I added intelligent course correction that switches back to rotation mode if the robot drifts too far off heading during movement.
-Once I achieved seamless and precise navigation between random points, I implemented the A* pathfinding algorithm to calculate optimal collision-free paths between any two points in the maze. The algorithm explores in four cardinal directions (north, south, east, west).
+In the following week, I focused on developing a ROS2 node that controls the robot to autonomously navigate through a sequence of waypoints in the maze. I implemented a two-state controller with a "ROTATE" state for orienting toward the target and a "MOVE" state for driving forward while maintaining heading. The system uses proportional control for both linear and angular velocities, dynamically adjusting speed based on distance to target and angle error. I added course correction that switches back to rotation mode if the robot drifts too far off heading during movement.
+Once I achieved seamless and precise navigation between random points, I implemented the A* pathfinding algorithm to calculate optimal collision-free paths between any two points in the maze. The algorithm explores in four directions (north, south, east, west).
 <br><br>
-In the subsequent weeks, I focused on implementing a simulated annealing algorithm to solve the Traveling Salesman Problem and find the optimal order to visit all waypoints in the maze. The system first computes a distance matrix between all points using A* pathfinding to get actual traversable distances rather than Euclidean distances, ensuring the solution accounts for walls and obstacles. I used a nearest-neighbor heuristic to generate a good initial solution, then applied simulated annealing. I integrated the system to work with mandatory start and finish points, ensuring the robot begins at the green marker and ends at the red marker while visiting all intermediate waypoints optimally.
+In the subsequent weeks, I focused on implementing a simulated annealing algorithm to solve the Traveling Salesman Problem and find the optimal order to visit all waypoints in the maze. The system first computes a distance matrix between all points using A* pathfinding to get actual traversable distances, ensuring the solution accounts for walls. I used a nearest-neighbor heuristic to generate a good initial solution, then applied simulated annealing. I integrated the system to work with mandatory start and finish points, ensuring the robot begins at the green marker and ends at the red marker while visiting all intermediate waypoints optimally.
 <br><br>
 I also implemented a visualization system using matplotlib animations that shows the maze layout, all waypoints, the full path, and an animated line that traces the robot's planned trajectory from start to finish.
 
-## Showcase
+## Example generated mazes
 ### Maze 5x5
 ![Maze 5x5](src/images/5x5.png)
 
@@ -51,3 +51,9 @@ I also implemented a visualization system using matplotlib animations that shows
 
 ### Maze 15x15
 ![Maze 15x15](src/images/15x15.png)
+
+## TSP visualization
+https://github.com/user-attachments/assets/47f6d087-a449-45b8-b887-8e1df4986d2f
+
+## Gazebo simulation
+https://github.com/user-attachments/assets/e856a067-3093-4311-9b94-f473b074fc70
